@@ -868,27 +868,27 @@
         }
 
         .tl-badge-edu {
-            background: rgba(108, 99, 255, 0.12);
-            border: 1px solid rgba(108, 99, 255, 0.25);
+            background: var(--accent-glow);
+            border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
             color: var(--accent);
         }
 
         .tl-badge-win {
-            background: rgba(0, 212, 170, 0.12);
-            border: 1px solid rgba(0, 212, 170, 0.25);
+            background: color-mix(in srgb, var(--accent-secondary) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent-secondary) 30%, transparent);
             color: var(--accent-secondary);
         }
 
         .tl-badge-research {
-            background: rgba(180, 76, 255, 0.12);
-            border: 1px solid rgba(180, 76, 255, 0.25);
-            color: #b44cff;
+            background: color-mix(in srgb, var(--accent) 8%, var(--accent-secondary) 4%);
+            border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--accent-secondary) 10%);
+            color: color-mix(in srgb, var(--accent) 60%, var(--accent-secondary) 40%);
         }
 
         .tl-badge-ta {
-            background: rgba(255, 180, 50, 0.12);
-            border: 1px solid rgba(255, 180, 50, 0.25);
-            color: #ffb432;
+            background: color-mix(in srgb, var(--accent-secondary) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent-secondary) 35%, transparent);
+            color: var(--accent-secondary);
         }
 
         /* Tooltip (positioned via JS as fixed) */
@@ -1478,17 +1478,58 @@
 </footer>
 
 <script>
+    // Random accent colors on each refresh
+    (function randomizeAccent() {
+        const hue1 = Math.floor(Math.random() * 360);
+        const hue2 = (hue1 + 140 + Math.floor(Math.random() * 80)) % 360;
+        const accent = `hsl(${hue1}, 70%, 65%)`;
+        const accentDark = `hsl(${hue1}, 65%, 55%)`;
+        const secondary = `hsl(${hue2}, 70%, 55%)`;
+        const secondaryDark = `hsl(${hue2}, 60%, 45%)`;
+        const r = document.documentElement.style;
+        // Dark theme accents
+        r.setProperty('--accent', accent);
+        r.setProperty('--accent-secondary', secondary);
+        r.setProperty('--accent-glow', `hsla(${hue1}, 70%, 65%, 0.15)`);
+        r.setProperty('--gradient-1', `linear-gradient(135deg, ${accent}, ${secondary})`);
+        r.setProperty('--gradient-2', `linear-gradient(135deg, ${accent} 0%, hsl(${(hue1+hue2)/2}, 70%, 60%) 50%, ${secondary} 100%)`);
+        // Store hues for light theme to pick up
+        document.documentElement.dataset.hue1 = hue1;
+        document.documentElement.dataset.hue2 = hue2;
+    })();
+
     // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
     const root = document.documentElement;
     const savedTheme = localStorage.getItem('theme') || 'dark';
     root.setAttribute('data-theme', savedTheme);
 
+    function applyAccentForTheme(theme) {
+        const h1 = parseInt(root.dataset.hue1);
+        const h2 = parseInt(root.dataset.hue2);
+        const s = root.style;
+        if (theme === 'light') {
+            s.setProperty('--accent', `hsl(${h1}, 65%, 50%)`);
+            s.setProperty('--accent-secondary', `hsl(${h2}, 60%, 40%)`);
+            s.setProperty('--accent-glow', `hsla(${h1}, 65%, 50%, 0.1)`);
+            s.setProperty('--gradient-1', `linear-gradient(135deg, hsl(${h1}, 65%, 50%), hsl(${h2}, 60%, 40%))`);
+            s.setProperty('--gradient-2', `linear-gradient(135deg, hsl(${h1}, 65%, 50%) 0%, hsl(${(h1+h2)/2}, 65%, 50%) 50%, hsl(${h2}, 60%, 40%) 100%)`);
+        } else {
+            s.setProperty('--accent', `hsl(${h1}, 70%, 65%)`);
+            s.setProperty('--accent-secondary', `hsl(${h2}, 70%, 55%)`);
+            s.setProperty('--accent-glow', `hsla(${h1}, 70%, 65%, 0.15)`);
+            s.setProperty('--gradient-1', `linear-gradient(135deg, hsl(${h1}, 70%, 65%), hsl(${h2}, 70%, 55%))`);
+            s.setProperty('--gradient-2', `linear-gradient(135deg, hsl(${h1}, 70%, 65%) 0%, hsl(${(h1+h2)/2}, 70%, 60%) 50%, hsl(${h2}, 70%, 55%) 100%)`);
+        }
+    }
+    applyAccentForTheme(savedTheme);
+
     themeToggle.addEventListener('click', () => {
         const current = root.getAttribute('data-theme');
         const next = current === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
+        applyAccentForTheme(next);
     });
 
     // Navbar scroll effect
