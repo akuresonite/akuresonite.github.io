@@ -640,37 +640,73 @@
             text-decoration: none;
         }
 
-        /* ——— Timeline ——— */
-        .timeline-container {
-            position: relative;
-            padding-left: 3rem;
+        /* ——— Timeline Sidebar ——— */
+        .tl-sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
         }
 
-        .timeline-container::before {
+        .tl-sidebar-inner {
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 1rem 1.25rem 1rem 1.5rem;
+            pointer-events: auto;
+            scrollbar-width: none;
+        }
+
+        .tl-sidebar-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tl-sidebar-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            padding-left: 1.75rem;
+        }
+
+        .tl-track {
+            position: relative;
+            padding-left: 1.75rem;
+        }
+
+        .tl-track::before {
             content: '';
             position: absolute;
-            left: 7px;
+            left: 4px;
             top: 0;
             bottom: 0;
             width: 2px;
             background: var(--border);
         }
 
-        .timeline-progress {
+        .tl-progress {
             position: absolute;
-            left: 7px;
+            left: 4px;
             top: 0;
             width: 2px;
             height: 0;
             background: var(--gradient-1);
-            transition: height 0.1s linear;
+            transition: height 0.15s linear;
             z-index: 1;
         }
 
         .tl-item {
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 1.1rem;
             cursor: pointer;
+            padding: 0.35rem 0;
         }
 
         .tl-item:last-child {
@@ -679,10 +715,10 @@
 
         .tl-dot {
             position: absolute;
-            left: -3rem;
-            top: 0.35rem;
-            width: 16px;
-            height: 16px;
+            left: -1.75rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: var(--bg-primary);
             border: 2px solid var(--border);
@@ -694,7 +730,8 @@
         .tl-item.active .tl-dot {
             border-color: var(--accent);
             background: var(--accent);
-            box-shadow: 0 0 12px rgba(108, 99, 255, 0.5);
+            box-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
+            transform: scale(1.3);
         }
 
         .tl-dot.dot-highlight {
@@ -705,46 +742,38 @@
         .tl-item.active .tl-dot.dot-highlight {
             border-color: var(--accent-secondary);
             background: var(--accent-secondary);
-            box-shadow: 0 0 12px rgba(0, 212, 170, 0.5);
+            box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
         }
 
         .tl-date {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
-            margin-bottom: 0.25rem;
+            line-height: 1;
+            margin-bottom: 0.15rem;
         }
 
         .tl-title {
-            font-size: 1rem;
+            font-size: 0.78rem;
             font-weight: 600;
-            margin-bottom: 0.15rem;
+            line-height: 1.3;
             transition: color 0.3s;
         }
 
-        .tl-item:hover .tl-title {
-            color: var(--accent);
-        }
-
+        .tl-item:hover .tl-title,
         .tl-item.active .tl-title {
             color: var(--accent);
         }
 
-        .tl-subtitle {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
-
         .tl-badge {
             display: inline-block;
-            padding: 0.15rem 0.55rem;
-            border-radius: 4px;
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.55rem;
             font-weight: 500;
-            margin-right: 0.4rem;
-            margin-top: 0.25rem;
+            margin-right: 0.25rem;
+            margin-top: 0.2rem;
         }
 
         .tl-badge-edu {
@@ -771,39 +800,104 @@
             color: #ffb432;
         }
 
-        .tl-expand {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, margin-top 0.3s ease;
-            margin-top: 0;
-        }
-
-        .tl-item.active .tl-expand {
-            max-height: 200px;
-            margin-top: 0.5rem;
-        }
-
-        .tl-expand-content {
+        /* Tooltip on hover */
+        .tl-tooltip {
+            position: absolute;
+            right: calc(100% + 0.75rem);
+            top: 0;
+            width: 240px;
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--accent);
             border-radius: 8px;
-            padding: 1rem 1.25rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+            padding: 0.75rem 1rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(8px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            z-index: 100;
         }
 
-        .tl-item.active .tl-expand-content {
-            border-color: rgba(108, 99, 255, 0.2);
+        .tl-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 12px;
+            width: 10px;
+            height: 10px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+            transform: rotate(-45deg);
         }
 
-        @media (max-width: 768px) {
-            .timeline-container {
-                padding-left: 2.25rem;
+        .tl-item.active .tl-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        /* Hide sidebar on small screens, show toggle */
+        .tl-mobile-toggle {
+            display: none;
+            position: fixed;
+            right: 1rem;
+            bottom: 1.5rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 95;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .tl-mobile-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 1200px) {
+            .tl-sidebar {
+                width: 240px;
             }
 
-            .tl-dot {
-                left: -2.25rem;
+            .tl-tooltip {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            .tl-sidebar {
+                display: none;
+                width: 280px;
+                background: rgba(10, 10, 15, 0.95);
+                backdrop-filter: blur(20px);
+                border-left: 1px solid var(--border);
+            }
+
+            .tl-sidebar.open {
+                display: flex;
+            }
+
+            .tl-sidebar .tl-sidebar-inner {
+                pointer-events: auto;
+            }
+
+            .tl-tooltip {
+                display: none;
+            }
+
+            .tl-mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
 
@@ -880,12 +974,107 @@
 </head>
 <body>
 
+<!-- ——— Timeline Sidebar (fixed right) ——— -->
+<aside class="tl-sidebar" id="tlSidebar">
+    <div class="tl-sidebar-inner">
+        <p class="tl-sidebar-label">// journey</p>
+        <div class="tl-track">
+            <div class="tl-progress" id="tlProgress"></div>
+
+            <div class="tl-item" data-detail="Joined SATI Vidisha under RGPV Bhopal for a 4-year B.E. program in Electrical Engineering.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">2018</p>
+                <p class="tl-title">B.E. Electrical Eng.</p>
+                <span class="tl-badge tl-badge-edu">Education</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Completed B.E. in Electrical Engineering with CPI 7.83. Built a strong foundation in math, signals, and programming.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">2022</p>
+                <p class="tl-title">Graduated B.E.</p>
+                <span class="tl-badge tl-badge-edu">Education</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Admitted to IIT Bombay for M.Tech in Industrial Engineering & Operations Research, focusing on ML and Optimization.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">2023</p>
+                <p class="tl-title">M.Tech — IIT Bombay</p>
+                <span class="tl-badge tl-badge-edu">Education</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Modified UNet for brain MRI tumor segmentation (74.4% Dice). Robust PCA for outlier detection on synthetic data and YouTube videos.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">Jan 2024</p>
+                <p class="tl-title">Tumor Seg. &amp; Robust PCA</p>
+                <span class="tl-badge tl-badge-research">Research</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Won 1st place in skin disease classification at IIT Bombay. EfficientNet + fold training + ensembling — 79.35% balanced accuracy.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">Feb 2024</p>
+                <p class="tl-title">1st Rank — Medical Image</p>
+                <span class="tl-badge tl-badge-win">1st Place</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="TA for IE643 Deep Learning under Prof. P Balamurugan — grading, doubt sessions, PyTorch implementations.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">Spring 2024</p>
+                <p class="tl-title">TA — Deep Learning</p>
+                <span class="tl-badge tl-badge-ta">TA</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Started thesis on efficient multi-modal generative models — GANs, Diffusion Models. Also fine-tuned GPT-2 & LLaMA-3.1 on domain-specific books.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">Jul 2024</p>
+                <p class="tl-title">Thesis + LLM Fine-Tuning</p>
+                <span class="tl-badge tl-badge-research">Thesis</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Extracted product entities from 6000+ images using OCR and zero-shot prompting for the Amazon ML Challenge 2024.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">Oct 2024</p>
+                <p class="tl-title">Amazon ML Challenge</p>
+                <span class="tl-badge tl-badge-research">Competition</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="NeurIPS 2024 Kaggle — processed 300M+ molecules in SMILES. PySpark + XGBoost + MLP achieving 0.24 mAP across three protein targets.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">Dec 2024</p>
+                <p class="tl-title">NeurIPS 2024 Kaggle</p>
+                <span class="tl-badge tl-badge-research">NeurIPS</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-detail="Continuing thesis on efficient generative models. Serving as TA for IE506 Machine Learning. Graduating 2025.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">2025</p>
+                <p class="tl-title">TA ML + Thesis Ongoing</p>
+                <span class="tl-badge tl-badge-ta">TA</span>
+                <span class="tl-badge tl-badge-research">Thesis</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+        </div>
+    </div>
+</aside>
+
+<button class="tl-mobile-toggle" id="tlMobileToggle" aria-label="Toggle timeline">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>
+</button>
+
 <!-- ——— Navbar ——— -->
 <nav id="navbar">
     <a href="#" class="nav-logo">&lt;ashish /&gt;</a>
     <ul class="nav-links" id="navLinks">
         <li><a href="#about">About</a></li>
-        <li><a href="#journey">Journey</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -953,110 +1142,6 @@
                 <p>1st Rank — AI/ML Medical Image Championship, IIT Bombay | NeurIPS 2024 Kaggle | Amazon ML Challenge 2024</p>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- ——— Journey Timeline ——— -->
-<section id="journey">
-    <div class="fade-in">
-        <p class="section-label">// journey</p>
-        <h2 class="section-title">My Timeline</h2>
-        <p class="section-desc">Click on any milestone to expand details.</p>
-    </div>
-    <div class="timeline-container fade-in">
-        <div class="timeline-progress" id="timelineProgress"></div>
-
-        <div class="tl-item" data-detail="Joined SATI Vidisha under RGPV Bhopal for a 4-year B.E. program in Electrical Engineering.">
-            <div class="tl-dot"></div>
-            <p class="tl-date">2018</p>
-            <p class="tl-title">Started B.E. Electrical Engineering</p>
-            <p class="tl-subtitle">SATI Vidisha — RGPV Bhopal</p>
-            <span class="tl-badge tl-badge-edu">Education</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Completed B.E. in Electrical Engineering with a CPI of 7.83. Built a strong foundation in mathematics, signals, and programming.">
-            <div class="tl-dot"></div>
-            <p class="tl-date">2022</p>
-            <p class="tl-title">Graduated — B.E. Electrical Engineering</p>
-            <p class="tl-subtitle">CPI: 7.83</p>
-            <span class="tl-badge tl-badge-edu">Education</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Admitted to IIT Bombay for M.Tech in Industrial Engineering & Operations Research, focusing on Machine Learning and Optimization.">
-            <div class="tl-dot dot-highlight"></div>
-            <p class="tl-date">2023</p>
-            <p class="tl-title">Joined M.Tech — IIT Bombay</p>
-            <p class="tl-subtitle">Industrial Engineering &amp; Operations Research</p>
-            <span class="tl-badge tl-badge-edu">Education</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Implemented a Modified UNet with skip connections for brain MRI tumor masks. Achieved 74.4% Dice score by epoch 10 with optimized computation.">
-            <div class="tl-dot"></div>
-            <p class="tl-date">Jan 2024</p>
-            <p class="tl-title">Tumor Segmentation &amp; Robust PCA Projects</p>
-            <p class="tl-subtitle">M.Tech Seminar &amp; ML Course Project</p>
-            <span class="tl-badge tl-badge-research">Research</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Won 1st place in skin disease classification among all IIT Bombay participants. Used EfficientNet, fold training with class weights, and ensembling to reach 79.35% balanced accuracy.">
-            <div class="tl-dot dot-highlight"></div>
-            <p class="tl-date">Feb 2024</p>
-            <p class="tl-title">1st Rank — AI/ML Medical Image Championship</p>
-            <p class="tl-subtitle">KCDH &amp; Web &amp; Coding Club, IIT Bombay</p>
-            <span class="tl-badge tl-badge-win">1st Place</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Assisted Prof. P Balamurugan with IE643 Deep Learning course — grading, doubt sessions, and helping students with PyTorch implementations.">
-            <div class="tl-dot"></div>
-            <p class="tl-date">Spring 2024</p>
-            <p class="tl-title">Teaching Assistant — Deep Learning</p>
-            <p class="tl-subtitle">IE643 &middot; Prof. P Balamurugan</p>
-            <span class="tl-badge tl-badge-ta">TA</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Started master's thesis on efficient multi-modal generative models. Experimenting with GANs (DCGAN, Conditional-GAN) and Diffusion Models for high-resolution image generation. Also fine-tuned GPT-2 & LLaMA-3.1 on domain-specific books.">
-            <div class="tl-dot dot-highlight"></div>
-            <p class="tl-date">Jul 2024</p>
-            <p class="tl-title">Master's Thesis Begins + LLM Fine-Tuning</p>
-            <p class="tl-subtitle">Generative Models &middot; Prof. P Balamurugan</p>
-            <span class="tl-badge tl-badge-research">Thesis</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Extracted product entities from 6000+ product images using pretrained OCR and zero-shot prompting, handling diverse orientations for automated entity extraction.">
-            <div class="tl-dot"></div>
-            <p class="tl-date">Oct 2024</p>
-            <p class="tl-title">Amazon ML Challenge 2024</p>
-            <p class="tl-subtitle">Product Entity Extraction — Zero-Shot Prompting</p>
-            <span class="tl-badge tl-badge-research">Competition</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Processed 300M+ molecular samples in SMILES representation for the NeurIPS 2024 Kaggle challenge. Used PySpark, computed molecular fingerprints, and applied XGBoost & MLP to achieve a 0.24 mAP score across three protein targets.">
-            <div class="tl-dot dot-highlight"></div>
-            <p class="tl-date">Dec 2024</p>
-            <p class="tl-title">NeurIPS 2024 — Protein Binding Prediction</p>
-            <p class="tl-subtitle">Kaggle &middot; 300M+ molecular samples &middot; PySpark</p>
-            <span class="tl-badge tl-badge-research">NeurIPS</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
-        <div class="tl-item" data-detail="Continuing thesis research on efficient generative models and serving as TA for IE506 Machine Learning under Prof. P Balamurugan.">
-            <div class="tl-dot dot-highlight"></div>
-            <p class="tl-date">2025</p>
-            <p class="tl-title">TA Machine Learning + Thesis Ongoing</p>
-            <p class="tl-subtitle">IE506 &middot; IIT Bombay &middot; Graduating 2025</p>
-            <span class="tl-badge tl-badge-ta">TA</span>
-            <span class="tl-badge tl-badge-research">Thesis</span>
-            <div class="tl-expand"><div class="tl-expand-content"></div></div>
-        </div>
-
     </div>
 </section>
 
@@ -1327,13 +1412,11 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Timeline: click to expand
+    // Timeline sidebar: populate tooltips
     document.querySelectorAll('.tl-item').forEach(item => {
         const detail = item.getAttribute('data-detail');
-        const expandContent = item.querySelector('.tl-expand-content');
-        if (detail && expandContent) {
-            expandContent.textContent = detail;
-        }
+        const tooltip = item.querySelector('.tl-tooltip');
+        if (detail && tooltip) tooltip.textContent = detail;
         item.addEventListener('click', () => {
             const wasActive = item.classList.contains('active');
             document.querySelectorAll('.tl-item.active').forEach(i => i.classList.remove('active'));
@@ -1341,20 +1424,38 @@
         });
     });
 
-    // Timeline: progress line follows scroll
-    const tlContainer = document.querySelector('.timeline-container');
-    const tlProgress = document.getElementById('timelineProgress');
-    if (tlContainer && tlProgress) {
+    // Close tooltip when clicking outside sidebar
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.tl-sidebar')) {
+            document.querySelectorAll('.tl-item.active').forEach(i => i.classList.remove('active'));
+        }
+    });
+
+    // Timeline progress follows page scroll
+    const tlTrack = document.querySelector('.tl-track');
+    const tlProgress = document.getElementById('tlProgress');
+    if (tlTrack && tlProgress) {
         const updateProgress = () => {
-            const rect = tlContainer.getBoundingClientRect();
-            const containerTop = rect.top + window.scrollY;
-            const containerHeight = rect.height;
-            const scrolled = window.scrollY + window.innerHeight * 0.5 - containerTop;
-            const pct = Math.min(Math.max(scrolled / containerHeight, 0), 1);
-            tlProgress.style.height = (pct * containerHeight) + 'px';
+            const docH = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docH > 0 ? Math.min(window.scrollY / docH, 1) : 0;
+            tlProgress.style.height = (pct * tlTrack.scrollHeight) + 'px';
         };
         window.addEventListener('scroll', updateProgress);
         updateProgress();
+    }
+
+    // Mobile toggle
+    const tlToggle = document.getElementById('tlMobileToggle');
+    const tlSidebar = document.getElementById('tlSidebar');
+    if (tlToggle && tlSidebar) {
+        tlToggle.addEventListener('click', () => {
+            tlSidebar.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.tl-sidebar') && !e.target.closest('#tlMobileToggle')) {
+                tlSidebar.classList.remove('open');
+            }
+        });
     }
 </script>
 
