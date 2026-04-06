@@ -630,15 +630,21 @@
         footer {
             text-align: center;
             padding: 2rem;
-            padding-right: 300px;
+            margin-right: 280px;
             border-top: 1px solid var(--border);
             color: var(--text-muted);
             font-size: 0.85rem;
         }
 
+        @media (max-width: 1200px) {
+            footer {
+                margin-right: 240px;
+            }
+        }
+
         @media (max-width: 960px) {
             footer {
-                padding-right: 2rem;
+                margin-right: 0;
             }
         }
 
