@@ -896,6 +896,14 @@
             }
         }
 
+        /* ——— Target Highlight ——— */
+        .tl-highlight {
+            outline: 2px solid var(--accent) !important;
+            outline-offset: 4px;
+            transition: outline-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.2);
+        }
+
         /* ——— Scroll Animations ——— */
         .fade-in {
             opacity: 0;
@@ -976,71 +984,16 @@
         <div class="tl-track">
             <div class="tl-progress" id="tlProgress"></div>
 
-            <div class="tl-item" data-detail="Joined SATI Vidisha under RGPV Bhopal for a 4-year B.E. program in Electrical Engineering.">
-                <div class="tl-dot"></div>
-                <p class="tl-date">2018</p>
-                <p class="tl-title">B.E. Electrical Eng.</p>
-                <span class="tl-badge tl-badge-edu">Education</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="Completed B.E. in Electrical Engineering with CPI 7.83. Built a strong foundation in math, signals, and programming.">
-                <div class="tl-dot"></div>
-                <p class="tl-date">2022</p>
-                <p class="tl-title">Graduated B.E.</p>
-                <span class="tl-badge tl-badge-edu">Education</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="Admitted to IIT Bombay for M.Tech in Industrial Engineering & Operations Research, focusing on ML and Optimization.">
+            <div class="tl-item" data-target="exp-ta-ml" data-detail="Continuing thesis on efficient generative models. Serving as TA for IE506 Machine Learning. Graduating 2025.">
                 <div class="tl-dot dot-highlight"></div>
-                <p class="tl-date">2023</p>
-                <p class="tl-title">M.Tech — IIT Bombay</p>
-                <span class="tl-badge tl-badge-edu">Education</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="Modified UNet for brain MRI tumor segmentation (74.4% Dice). Robust PCA for outlier detection on synthetic data and YouTube videos.">
-                <div class="tl-dot"></div>
-                <p class="tl-date">Jan 2024</p>
-                <p class="tl-title">Tumor Seg. &amp; Robust PCA</p>
-                <span class="tl-badge tl-badge-research">Research</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="Won 1st place in skin disease classification at IIT Bombay. EfficientNet + fold training + ensembling — 79.35% balanced accuracy.">
-                <div class="tl-dot dot-highlight"></div>
-                <p class="tl-date">Feb 2024</p>
-                <p class="tl-title">1st Rank — Medical Image</p>
-                <span class="tl-badge tl-badge-win">1st Place</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="TA for IE643 Deep Learning under Prof. P Balamurugan — grading, doubt sessions, PyTorch implementations.">
-                <div class="tl-dot"></div>
-                <p class="tl-date">Spring 2024</p>
-                <p class="tl-title">TA — Deep Learning</p>
+                <p class="tl-date">2025</p>
+                <p class="tl-title">TA ML + Thesis Ongoing</p>
                 <span class="tl-badge tl-badge-ta">TA</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="Started thesis on efficient multi-modal generative models — GANs, Diffusion Models. Also fine-tuned GPT-2 & LLaMA-3.1 on domain-specific books.">
-                <div class="tl-dot dot-highlight"></div>
-                <p class="tl-date">Jul 2024</p>
-                <p class="tl-title">Thesis + LLM Fine-Tuning</p>
                 <span class="tl-badge tl-badge-research">Thesis</span>
                 <div class="tl-tooltip"></div>
             </div>
 
-            <div class="tl-item" data-detail="Extracted product entities from 6000+ images using OCR and zero-shot prompting for the Amazon ML Challenge 2024.">
-                <div class="tl-dot"></div>
-                <p class="tl-date">Oct 2024</p>
-                <p class="tl-title">Amazon ML Challenge</p>
-                <span class="tl-badge tl-badge-research">Competition</span>
-                <div class="tl-tooltip"></div>
-            </div>
-
-            <div class="tl-item" data-detail="NeurIPS 2024 Kaggle — processed 300M+ molecules in SMILES. PySpark + XGBoost + MLP achieving 0.24 mAP across three protein targets.">
+            <div class="tl-item" data-target="proj-neurips" data-detail="NeurIPS 2024 Kaggle — processed 300M+ molecules in SMILES. PySpark + XGBoost + MLP achieving 0.24 mAP across three protein targets.">
                 <div class="tl-dot dot-highlight"></div>
                 <p class="tl-date">Dec 2024</p>
                 <p class="tl-title">NeurIPS 2024 Kaggle</p>
@@ -1048,12 +1001,67 @@
                 <div class="tl-tooltip"></div>
             </div>
 
-            <div class="tl-item" data-detail="Continuing thesis on efficient generative models. Serving as TA for IE506 Machine Learning. Graduating 2025.">
+            <div class="tl-item" data-target="proj-amazon" data-detail="Extracted product entities from 6000+ images using OCR and zero-shot prompting for the Amazon ML Challenge 2024.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">Oct 2024</p>
+                <p class="tl-title">Amazon ML Challenge</p>
+                <span class="tl-badge tl-badge-research">Competition</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="proj-thesis" data-detail="Started thesis on efficient multi-modal generative models — GANs, Diffusion Models. Also fine-tuned GPT-2 & LLaMA-3.1 on domain-specific books.">
                 <div class="tl-dot dot-highlight"></div>
-                <p class="tl-date">2025</p>
-                <p class="tl-title">TA ML + Thesis Ongoing</p>
-                <span class="tl-badge tl-badge-ta">TA</span>
+                <p class="tl-date">Jul 2024</p>
+                <p class="tl-title">Thesis + LLM Fine-Tuning</p>
                 <span class="tl-badge tl-badge-research">Thesis</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="exp-ta-dl" data-detail="TA for IE643 Deep Learning under Prof. P Balamurugan — grading, doubt sessions, PyTorch implementations.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">Spring 2024</p>
+                <p class="tl-title">TA — Deep Learning</p>
+                <span class="tl-badge tl-badge-ta">TA</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="proj-medical" data-detail="Won 1st place in skin disease classification at IIT Bombay. EfficientNet + fold training + ensembling — 79.35% balanced accuracy.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">Feb 2024</p>
+                <p class="tl-title">1st Rank — Medical Image</p>
+                <span class="tl-badge tl-badge-win">1st Place</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="proj-tumor" data-detail="Modified UNet for brain MRI tumor segmentation (74.4% Dice). Robust PCA for outlier detection on synthetic data and YouTube videos.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">Jan 2024</p>
+                <p class="tl-title">Tumor Seg. &amp; Robust PCA</p>
+                <span class="tl-badge tl-badge-research">Research</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="edu-mtech" data-detail="Admitted to IIT Bombay for M.Tech in Industrial Engineering & Operations Research, focusing on ML and Optimization.">
+                <div class="tl-dot dot-highlight"></div>
+                <p class="tl-date">2023</p>
+                <p class="tl-title">M.Tech — IIT Bombay</p>
+                <span class="tl-badge tl-badge-edu">Education</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="edu-be" data-detail="Completed B.E. in Electrical Engineering with CPI 7.83. Built a strong foundation in math, signals, and programming.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">2022</p>
+                <p class="tl-title">Graduated B.E.</p>
+                <span class="tl-badge tl-badge-edu">Education</span>
+                <div class="tl-tooltip"></div>
+            </div>
+
+            <div class="tl-item" data-target="edu-be" data-detail="Joined SATI Vidisha under RGPV Bhopal for a 4-year B.E. program in Electrical Engineering.">
+                <div class="tl-dot"></div>
+                <p class="tl-date">2018</p>
+                <p class="tl-title">B.E. Electrical Eng.</p>
+                <span class="tl-badge tl-badge-edu">Education</span>
                 <div class="tl-tooltip"></div>
             </div>
 
@@ -1147,7 +1155,7 @@
         <h2 class="section-title">Academic Background</h2>
     </div>
     <div class="edu-timeline fade-in">
-        <div class="edu-card">
+        <div class="edu-card" id="edu-mtech">
             <div class="edu-info">
                 <h3>Master of Technology</h3>
                 <p class="edu-dept">Industrial Engineering &amp; Operations Research</p>
@@ -1158,7 +1166,7 @@
                 <p class="edu-cpi">CPI: 8.22</p>
             </div>
         </div>
-        <div class="edu-card">
+        <div class="edu-card" id="edu-be">
             <div class="edu-info">
                 <h3>Bachelor of Engineering</h3>
                 <p class="edu-dept">Electrical Engineering</p>
@@ -1173,11 +1181,11 @@
 
     <div class="exp-cards fade-in" style="margin-top: 2.5rem;">
         <p class="section-label">// experience</p>
-        <div class="exp-card" style="margin-top: 0.75rem;">
+        <div class="exp-card" id="exp-ta-ml" style="margin-top: 0.75rem;">
             <h3>Teaching Assistant — IE506 Machine Learning <span class="exp-badge">Ongoing</span></h3>
             <p class="exp-detail">Instructor: Prof. P Balamurugan &middot; IIT Bombay</p>
         </div>
-        <div class="exp-card">
+        <div class="exp-card" id="exp-ta-dl">
             <h3>Teaching Assistant — IE643 Deep Learning</h3>
             <p class="exp-detail">Instructor: Prof. P Balamurugan &middot; IIT Bombay &middot; Spring 2024</p>
         </div>
@@ -1243,7 +1251,7 @@
     </div>
     <div class="projects-grid fade-in">
 
-        <div class="project-card">
+        <div class="project-card" id="proj-thesis">
             <p class="project-meta">Jul 2024 — Ongoing</p>
             <h3>Efficient Multi-Modal Generative Models</h3>
             <p class="project-org">Master Thesis &middot; Prof. P Balamurugan</p>
@@ -1256,7 +1264,7 @@
             </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" id="proj-medical">
             <p class="project-meta">Feb 2024 — Mar 2024</p>
             <h3>AI/ML Medical Image Championship</h3>
             <p class="project-org">KCDH &amp; Web Club, IIT Bombay</p>
@@ -1268,7 +1276,7 @@
             </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" id="proj-neurips">
             <p class="project-meta">Dec 2024 — Jan 2025</p>
             <h3>Protein Binding Affinity Prediction</h3>
             <p class="project-org">NeurIPS 2024 &middot; Kaggle Challenge</p>
@@ -1281,7 +1289,7 @@
             </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" id="proj-tumor">
             <p class="project-meta">Jan 2024 — Apr 2024</p>
             <h3>Tumor Localization &amp; Segmentation</h3>
             <p class="project-org">M.Tech Seminar &middot; Prof. P Balamurugan</p>
@@ -1293,7 +1301,7 @@
             </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" id="proj-amazon">
             <p class="project-meta">Oct 2024</p>
             <h3>Product Entity Extraction — Zero-Shot</h3>
             <p class="project-org">Amazon ML Challenge 2024</p>
@@ -1305,7 +1313,7 @@
             </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" id="proj-llm">
             <p class="project-meta">Jul 2024 — Aug 2024</p>
             <h3>Custom Chatbot with Fine-Tuned LLMs</h3>
             <p class="project-org">Self Project</p>
@@ -1318,7 +1326,7 @@
             </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card" id="proj-pca">
             <p class="project-meta">Jan 2024 — Apr 2024</p>
             <h3>Outlier Detection &amp; Robust PCA</h3>
             <p class="project-org">Course Project &middot; Machine Learning</p>
@@ -1407,15 +1415,34 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Timeline sidebar: populate tooltips
+    // Timeline sidebar: populate tooltips + scroll-to-target
+    let highlightTimer = null;
     document.querySelectorAll('.tl-item').forEach(item => {
         const detail = item.getAttribute('data-detail');
         const tooltip = item.querySelector('.tl-tooltip');
         if (detail && tooltip) tooltip.textContent = detail;
+
         item.addEventListener('click', () => {
             const wasActive = item.classList.contains('active');
             document.querySelectorAll('.tl-item.active').forEach(i => i.classList.remove('active'));
             if (!wasActive) item.classList.add('active');
+
+            // Scroll to mapped element and highlight it
+            const targetId = item.getAttribute('data-target');
+            if (targetId) {
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Remove previous highlights
+                    document.querySelectorAll('.tl-highlight').forEach(el => el.classList.remove('tl-highlight'));
+                    clearTimeout(highlightTimer);
+                    // Add highlight after scroll
+                    setTimeout(() => {
+                        target.classList.add('tl-highlight');
+                        highlightTimer = setTimeout(() => target.classList.remove('tl-highlight'), 2500);
+                    }, 400);
+                }
+            }
         });
     });
 
