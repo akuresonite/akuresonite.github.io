@@ -668,10 +668,26 @@
 
         .tl-sidebar-inner {
             width: 100%;
-            max-height: 85vh;
-            overflow: visible;
+            max-height: 90vh;
+            overflow-y: auto;
+            overflow-x: visible;
             padding: 1rem 1.25rem 1rem 1.5rem;
             pointer-events: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .tl-sidebar-inner::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .tl-sidebar-inner::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tl-sidebar-inner::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
         }
 
         .tl-sidebar-label {
@@ -808,11 +824,9 @@
             color: #ffb432;
         }
 
-        /* Tooltip on hover */
-        .tl-tooltip {
-            position: absolute;
-            right: calc(100% + 0.75rem);
-            top: 0;
+        /* Tooltip (positioned via JS as fixed) */
+        .tl-tooltip-fixed {
+            position: fixed;
             width: 240px;
             background: var(--bg-card);
             border: 1px solid var(--accent);
@@ -824,12 +838,12 @@
             opacity: 0;
             visibility: hidden;
             transform: translateX(8px);
-            transition: all 0.25s ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
             pointer-events: none;
-            z-index: 300;
+            z-index: 500;
         }
 
-        .tl-tooltip::after {
+        .tl-tooltip-fixed::after {
             content: '';
             position: absolute;
             right: -6px;
@@ -842,7 +856,7 @@
             transform: rotate(-45deg);
         }
 
-        .tl-item.active .tl-tooltip {
+        .tl-tooltip-fixed.show {
             opacity: 1;
             visibility: visible;
             transform: translateX(0);
@@ -898,7 +912,7 @@
                 pointer-events: auto;
             }
 
-            .tl-tooltip {
+            .tl-tooltip-fixed {
                 display: none;
             }
 
@@ -1003,7 +1017,6 @@
                 <p class="tl-title">TA ML + Thesis Ongoing</p>
                 <span class="tl-badge tl-badge-ta">TA</span>
                 <span class="tl-badge tl-badge-research">Thesis</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="proj-neurips" data-detail="NeurIPS 2024 Kaggle — processed 300M+ molecules in SMILES. PySpark + XGBoost + MLP achieving 0.24 mAP across three protein targets.">
@@ -1011,7 +1024,6 @@
                 <p class="tl-date">Dec 2024</p>
                 <p class="tl-title">NeurIPS 2024 Kaggle</p>
                 <span class="tl-badge tl-badge-research">NeurIPS</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="proj-amazon" data-detail="Extracted product entities from 6000+ images using OCR and zero-shot prompting for the Amazon ML Challenge 2024.">
@@ -1019,7 +1031,6 @@
                 <p class="tl-date">Oct 2024</p>
                 <p class="tl-title">Amazon ML Challenge</p>
                 <span class="tl-badge tl-badge-research">Competition</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="proj-thesis" data-detail="Started thesis on efficient multi-modal generative models — GANs, Diffusion Models. Also fine-tuned GPT-2 & LLaMA-3.1 on domain-specific books.">
@@ -1027,7 +1038,6 @@
                 <p class="tl-date">Jul 2024</p>
                 <p class="tl-title">Thesis + LLM Fine-Tuning</p>
                 <span class="tl-badge tl-badge-research">Thesis</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="exp-ta-dl" data-detail="TA for IE643 Deep Learning under Prof. P Balamurugan — grading, doubt sessions, PyTorch implementations.">
@@ -1035,7 +1045,6 @@
                 <p class="tl-date">Spring 2024</p>
                 <p class="tl-title">TA — Deep Learning</p>
                 <span class="tl-badge tl-badge-ta">TA</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="proj-medical" data-detail="Won 1st place in skin disease classification at IIT Bombay. EfficientNet + fold training + ensembling — 79.35% balanced accuracy.">
@@ -1043,7 +1052,6 @@
                 <p class="tl-date">Feb 2024</p>
                 <p class="tl-title">1st Rank — Medical Image</p>
                 <span class="tl-badge tl-badge-win">1st Place</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="proj-tumor" data-detail="Modified UNet for brain MRI tumor segmentation (74.4% Dice). Robust PCA for outlier detection on synthetic data and YouTube videos.">
@@ -1051,7 +1059,6 @@
                 <p class="tl-date">Jan 2024</p>
                 <p class="tl-title">Tumor Seg. &amp; Robust PCA</p>
                 <span class="tl-badge tl-badge-research">Research</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="edu-mtech" data-detail="Admitted to IIT Bombay for M.Tech in Industrial Engineering & Operations Research, focusing on ML and Optimization.">
@@ -1059,7 +1066,6 @@
                 <p class="tl-date">2023</p>
                 <p class="tl-title">M.Tech — IIT Bombay</p>
                 <span class="tl-badge tl-badge-edu">Education</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="edu-be" data-detail="Completed B.E. in Electrical Engineering with CPI 7.83. Built a strong foundation in math, signals, and programming.">
@@ -1067,7 +1073,6 @@
                 <p class="tl-date">2022</p>
                 <p class="tl-title">Graduated B.E.</p>
                 <span class="tl-badge tl-badge-edu">Education</span>
-                <div class="tl-tooltip"></div>
             </div>
 
             <div class="tl-item" data-target="edu-be" data-detail="Joined SATI Vidisha under RGPV Bhopal for a 4-year B.E. program in Electrical Engineering.">
@@ -1075,12 +1080,13 @@
                 <p class="tl-date">2018</p>
                 <p class="tl-title">B.E. Electrical Eng.</p>
                 <span class="tl-badge tl-badge-edu">Education</span>
-                <div class="tl-tooltip"></div>
             </div>
 
         </div>
     </div>
 </aside>
+
+<div class="tl-tooltip-fixed" id="tlTooltip"></div>
 
 <button class="tl-mobile-toggle" id="tlMobileToggle" aria-label="Toggle timeline">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="22"/><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>
@@ -1428,17 +1434,40 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Timeline sidebar: populate tooltips + scroll-to-target
+    // Timeline sidebar: fixed tooltip + scroll-to-target
+    const tlTooltip = document.getElementById('tlTooltip');
     let highlightTimer = null;
-    document.querySelectorAll('.tl-item').forEach(item => {
-        const detail = item.getAttribute('data-detail');
-        const tooltip = item.querySelector('.tl-tooltip');
-        if (detail && tooltip) tooltip.textContent = detail;
+    let activeItem = null;
 
+    function showTooltip(item) {
+        const detail = item.getAttribute('data-detail');
+        if (!detail || !tlTooltip) return;
+        tlTooltip.textContent = detail;
+        const rect = item.getBoundingClientRect();
+        const sidebar = document.getElementById('tlSidebar');
+        const sidebarRect = sidebar.getBoundingClientRect();
+        tlTooltip.style.top = rect.top + 'px';
+        tlTooltip.style.right = (window.innerWidth - sidebarRect.left + 12) + 'px';
+        tlTooltip.classList.add('show');
+    }
+
+    function hideTooltip() {
+        if (tlTooltip) tlTooltip.classList.remove('show');
+    }
+
+    document.querySelectorAll('.tl-item').forEach(item => {
         item.addEventListener('click', () => {
-            const wasActive = item.classList.contains('active');
+            const wasActive = item === activeItem;
             document.querySelectorAll('.tl-item.active').forEach(i => i.classList.remove('active'));
-            if (!wasActive) item.classList.add('active');
+            hideTooltip();
+
+            if (!wasActive) {
+                item.classList.add('active');
+                activeItem = item;
+                showTooltip(item);
+            } else {
+                activeItem = null;
+            }
 
             // Scroll to mapped element and highlight it
             const targetId = item.getAttribute('data-target');
@@ -1446,10 +1475,8 @@
                 const target = document.getElementById(targetId);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Remove previous highlights
                     document.querySelectorAll('.tl-highlight').forEach(el => el.classList.remove('tl-highlight'));
                     clearTimeout(highlightTimer);
-                    // Add highlight after scroll
                     setTimeout(() => {
                         target.classList.add('tl-highlight');
                         highlightTimer = setTimeout(() => target.classList.remove('tl-highlight'), 2500);
@@ -1459,10 +1486,22 @@
         });
     });
 
+    // Reposition tooltip on scroll (sidebar scrolls)
+    const tlSidebarInner = document.querySelector('.tl-sidebar-inner');
+    if (tlSidebarInner) {
+        tlSidebarInner.addEventListener('scroll', () => {
+            if (activeItem && activeItem.classList.contains('active')) {
+                showTooltip(activeItem);
+            }
+        });
+    }
+
     // Close tooltip when clicking outside sidebar
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.tl-sidebar')) {
+        if (!e.target.closest('.tl-sidebar') && !e.target.closest('.tl-tooltip-fixed')) {
             document.querySelectorAll('.tl-item.active').forEach(i => i.classList.remove('active'));
+            hideTooltip();
+            activeItem = null;
         }
     });
 
